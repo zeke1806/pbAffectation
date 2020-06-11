@@ -56,7 +56,12 @@ const DisplayResult: React.FC<DisplayResultProps> = ({ matrix, reset, mode }) =>
 
     return (
         <div className="card-container">
-            <Header resolve={resolve} reset={resetAll} onLoad={state.onLoad} />
+            <Header
+                resolve={resolve}
+                reset={resetAll}
+                onLoad={state.onLoad}
+                result={state.result}
+            />
             <div className="scrollable-content-view">
                 {state.result.length === 0 ? (
                     <Loading onLoad={state.onLoad} />

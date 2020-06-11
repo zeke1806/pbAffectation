@@ -7,9 +7,10 @@ interface HeaderProps {
     resolve: any;
     reset: any;
     onLoad: boolean;
+    result: any;
 }
 
-const Header: React.FC<HeaderProps> = ({ resolve, reset, onLoad }) => {
+const Header: React.FC<HeaderProps> = ({ resolve, reset, onLoad, result }) => {
     return (
         <div className="container-header">
             <Typography.Title level={4} style={{ color: '#fff' }}>
@@ -24,8 +25,11 @@ const Header: React.FC<HeaderProps> = ({ resolve, reset, onLoad }) => {
                 >
                     Resoudre
                 </Button>
-                <Button type="primary" onClick={reset}>
+                <Button type="primary" style={{ marginRight: 5 }} onClick={reset}>
                     Reset
+                </Button>
+                <Button type="primary" disabled={result.length === 0}>
+                    Graph
                 </Button>
             </div>
         </div>
