@@ -41,7 +41,7 @@ const Application = () => {
             matrix: state.matrix.map((r: any, i: number) => {
                 r = r.map((c: any, i2: number) => {
                     if (x === i && y === i2) {
-                        return { ...c, value };
+                        return { ...c, value: parseInt(value, 10) };
                     }
                     return { ...c };
                 });

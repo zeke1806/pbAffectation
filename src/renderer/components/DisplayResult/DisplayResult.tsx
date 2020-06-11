@@ -4,6 +4,7 @@ import * as React from 'react';
 import { PythonShell } from 'python-shell';
 import Header from './Header';
 import Loading from './Loading';
+import Result from './Result';
 
 require('./displayResult.scss');
 
@@ -13,6 +14,7 @@ interface DisplayResultProps {
 }
 
 const DisplayResult: React.FC<DisplayResultProps> = ({ matrix, reset }) => {
+    console.log(matrix);
     const [state, setState] = React.useState({
         onLoad: false,
         result: []
@@ -56,7 +58,11 @@ const DisplayResult: React.FC<DisplayResultProps> = ({ matrix, reset }) => {
         <div className="card-container">
             <Header resolve={resolve} reset={resetAll} />
             <div className="scrollable-content-view">
-                <Loading onLoad={state.onLoad} />
+                {state.result.length === 0 ? (
+                    <Loading onLoad={state.onLoad} />
+                ) : (
+                    <Result result={state.result} />
+                )}
             </div>
         </div>
     );

@@ -1,5 +1,7 @@
+/* eslint-disable @typescript-eslint/ban-ts-ignore */
 import * as React from 'react';
-import { InputNumber } from 'antd';
+
+import NumericInput from './NumInput';
 
 interface RangeEdit {
     getValue: any;
@@ -9,21 +11,16 @@ interface RangeEdit {
 }
 
 const RangeEdit: React.FC<RangeEdit> = ({ getValue, cell, onChange, onChangeMatrix }) => {
-    function rulesValue(value: any) {
-        if (value === '') return 0;
-        return value;
-    }
+    const defaultValue = getValue({ data: cell }) || 0;
     return (
-        <InputNumber
-            min={0}
-            value={getValue({ data: cell }) || 0}
+        <NumericInput
+            // @ts-ignore
+            style={{ width: 120 }}
+            value={defaultValue}
             onChange={(value: any) => {
-                onChange({ ...cell, value: rulesValue(value) });
-                onChangeMatrix(rulesValue(value));
+                onChange({ ...cell, value });
+                onChangeMatrix(value);
             }}
-            inputMode="numeric"
-            placeholder="Valeur"
-            type="number"
         />
     );
 };
