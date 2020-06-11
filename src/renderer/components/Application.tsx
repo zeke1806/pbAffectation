@@ -7,12 +7,14 @@ import Info from './AppHeader/Info';
 import MatrixInput from './MatrixInput/MatrixInput';
 import RangeEdit from './Matrix/RangeEdit';
 import DisplayResult from './DisplayResult/DisplayResult';
+import Graph from './DisplayResult/Graph';
 
 const Application = () => {
     const [state, setState] = React.useState<any>({
         order: 2,
         matrix: [[]],
-        mode: 'min'
+        mode: 'min',
+        displayGraph: false
     });
 
     React.useEffect(() => {
@@ -70,6 +72,10 @@ const Application = () => {
         setState({ ...state, matrix: generateMatrixValue() });
     };
 
+    const handleDisplayGraph = (value: boolean) => () => {
+        setState({ ...state, displayGraph: value });
+    };
+
     return (
         <div>
             <Info />
@@ -81,7 +87,17 @@ const Application = () => {
                 onChangeMode={handleChangeMode}
                 mode={state.mode}
             />
-            <DisplayResult matrix={state.matrix} reset={reset} mode={state.mode} />
+            <DisplayResult
+                matrix={state.matrix}
+                reset={reset}
+                mode={state.mode}
+                displayGraph={handleDisplayGraph(true)}
+            />
+            <Graph
+                visible={state.displayGraph}
+                onOk={handleDisplayGraph(false)}
+                onCancel={handleDisplayGraph(false)}
+            />
         </div>
     );
 };

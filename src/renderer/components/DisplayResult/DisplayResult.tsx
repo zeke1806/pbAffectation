@@ -12,9 +12,10 @@ interface DisplayResultProps {
     matrix: any;
     reset: any;
     mode: string;
+    displayGraph: any;
 }
 
-const DisplayResult: React.FC<DisplayResultProps> = ({ matrix, reset, mode }) => {
+const DisplayResult: React.FC<DisplayResultProps> = ({ matrix, reset, mode, displayGraph }) => {
     const [state, setState] = React.useState({
         onLoad: false,
         result: []
@@ -61,6 +62,7 @@ const DisplayResult: React.FC<DisplayResultProps> = ({ matrix, reset, mode }) =>
                 reset={resetAll}
                 onLoad={state.onLoad}
                 result={state.result}
+                displayGraph={displayGraph}
             />
             <div className="scrollable-content-view">
                 {state.result.length === 0 ? (
