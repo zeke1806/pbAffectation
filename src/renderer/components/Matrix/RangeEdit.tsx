@@ -8,11 +8,14 @@ interface RangeEdit {
     cell: any;
     onChange: any;
     onChangeMatrix: any;
+    disabled: boolean;
 }
 
-const RangeEdit: React.FC<RangeEdit> = ({ getValue, cell, onChange, onChangeMatrix }) => {
+const RangeEdit: React.FC<RangeEdit> = ({ getValue, cell, onChange, onChangeMatrix, disabled }) => {
     const defaultValue = getValue({ data: cell }) || 0;
-    return (
+    return disabled ? (
+        <div>{getValue({ data: cell })}</div>
+    ) : (
         <NumericInput
             // @ts-ignore
             style={{ width: 120 }}

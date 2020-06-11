@@ -1,3 +1,4 @@
+/* eslint-disable func-names */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable no-param-reassign */
 import * as React from 'react';
@@ -5,6 +6,7 @@ import { Card, Divider } from 'antd';
 
 import Matrix from '../Matrix/Matrix';
 import RangeView from '../Matrix/RangeView';
+import RangeEdit from '../Matrix/RangeEdit';
 
 require('./result.scss');
 
@@ -13,11 +15,14 @@ interface ResultProps {
 }
 
 const Result: React.FC<ResultProps> = ({ result }) => {
-    console.log(result);
     const bindWith = (matrix: any) => {
         return matrix.map((r: any) => {
             r = r.map((c: any) => {
-                c = { value: c, DataViewer: RangeView };
+                c = {
+                    value: c,
+                    DataViewer: RangeView,
+                    DataEditor: (props: any) => <RangeEdit {...props} disabled={true} />
+                };
                 return c;
             });
             return r;

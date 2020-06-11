@@ -14,7 +14,6 @@ interface DisplayResultProps {
 }
 
 const DisplayResult: React.FC<DisplayResultProps> = ({ matrix, reset }) => {
-    console.log(matrix);
     const [state, setState] = React.useState({
         onLoad: false,
         result: []

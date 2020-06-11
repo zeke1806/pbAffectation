@@ -58,7 +58,7 @@ class NumericInput extends React.Component<NumericInputProps> {
         const title = value ? (
             <span className="numeric-input-title">{value !== '-' ? formatNumber(value) : '-'}</span>
         ) : (
-            'Input a number'
+            'Entrer un nombre'
         );
         return (
             <Tooltip
