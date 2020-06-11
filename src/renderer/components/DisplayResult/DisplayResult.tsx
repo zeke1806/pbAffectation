@@ -11,9 +11,10 @@ require('./displayResult.scss');
 interface DisplayResultProps {
     matrix: any;
     reset: any;
+    mode: string;
 }
 
-const DisplayResult: React.FC<DisplayResultProps> = ({ matrix, reset }) => {
+const DisplayResult: React.FC<DisplayResultProps> = ({ matrix, reset, mode }) => {
     const [state, setState] = React.useState({
         onLoad: false,
         result: []
@@ -41,7 +42,7 @@ const DisplayResult: React.FC<DisplayResultProps> = ({ matrix, reset }) => {
             '/home/zeke/Projets/M1/pbAffectation/pbAffectation/src/python/main.py',
             {
                 mode: 'text',
-                args: [JSON.stringify(data)]
+                args: [JSON.stringify(data), mode]
             },
             function(err: any, results: any) {
                 if (err) throw err;
@@ -55,7 +56,7 @@ const DisplayResult: React.FC<DisplayResultProps> = ({ matrix, reset }) => {
 
     return (
         <div className="card-container">
-            <Header resolve={resolve} reset={resetAll} />
+            <Header resolve={resolve} reset={resetAll} onLoad={state.onLoad} />
             <div className="scrollable-content-view">
                 {state.result.length === 0 ? (
                     <Loading onLoad={state.onLoad} />

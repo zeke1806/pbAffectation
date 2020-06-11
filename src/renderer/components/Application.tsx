@@ -11,7 +11,8 @@ import DisplayResult from './DisplayResult/DisplayResult';
 const Application = () => {
     const [state, setState] = React.useState<any>({
         order: 2,
-        matrix: [[]]
+        matrix: [[]],
+        mode: 'min'
     });
 
     React.useEffect(() => {
@@ -50,6 +51,10 @@ const Application = () => {
         });
     };
 
+    const handleChangeMode = (e: any) => {
+        setState({ ...state, mode: e.target.value });
+    };
+
     const bindWith = () => {
         return state.matrix.map((r: any, i: number) => {
             r.forEach((c: any, i2: number) => {
@@ -73,8 +78,10 @@ const Application = () => {
                 order={state.order}
                 onChangeOrder={(value: any) => setState({ ...state, order: value })}
                 bindWith={bindWith}
+                onChangeMode={handleChangeMode}
+                mode={state.mode}
             />
-            <DisplayResult matrix={state.matrix} reset={reset} />
+            <DisplayResult matrix={state.matrix} reset={reset} mode={state.mode} />
         </div>
     );
 };
