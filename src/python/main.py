@@ -1,6 +1,7 @@
 # -*-coding:utf-8 -*
 
 from algo_hongrois import *
+from sys import argv
 import copy
 import json
 
@@ -179,4 +180,5 @@ def main (MATRIX_, type_process=None):
 
 # zone de test
 if __name__ == "__main__":
-    print(json.dumps(main(MATRIX2)))
+    data = json.loads(argv[1])
+    print(json.dumps(main(data)))

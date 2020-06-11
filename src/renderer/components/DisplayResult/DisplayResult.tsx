@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 /* eslint-disable func-names */
 import * as React from 'react';
 import { PythonShell } from 'python-shell';
@@ -13,29 +14,47 @@ interface DisplayResultProps {
 
 const DisplayResult: React.FC<DisplayResultProps> = ({ matrix, reset }) => {
     const [state, setState] = React.useState({
-        onLoad: false
+        onLoad: false,
+        result: []
     });
 
+    const matrixFormated = () => {
+        return matrix.map((r: any) => {
+            r = r.map((c: any) => {
+                c = c.value;
+                return c;
+            });
+            return r;
+        });
+    };
+
+    const resetAll = () => {
+        reset();
+        setState({ ...state, result: [] });
+    };
+
     const resolve = () => {
+        setState({ ...state, onLoad: true });
+        const data = matrixFormated();
         PythonShell.run(
             '/home/zeke/Projets/M1/pbAffectation/pbAffectation/src/python/main.py',
             {
-                mode: 'text'
+                mode: 'text',
+                args: [JSON.stringify(data)]
             },
             function(err: any, results: any) {
                 if (err) throw err;
-                alert(results[0]);
+                const result = JSON.parse(results[0]);
+                setTimeout(function() {
+                    setState({ ...state, onLoad: false, result });
+                }, 1500);
             }
         );
-        // setState({ ...state, onLoad: true });
-        // setTimeout(function() {
-        //     setState({ ...state, onLoad: false });
-        // }, 1500);
     };
 
     return (
         <div className="card-container">
-            <Header resolve={resolve} reset={reset} />
+            <Header resolve={resolve} reset={resetAll} />
             <div className="scrollable-content-view">
                 <Loading onLoad={state.onLoad} />
             </div>
