@@ -32,7 +32,7 @@ const MatrixInput: React.FC<MatrixInputProps> = ({
             <div className="order-martrix">
                 <InputNumber
                     min={2}
-                    max={8}
+                    max={7}
                     defaultValue={order}
                     onChange={onChangeOrder}
                     inputMode="numeric"
