@@ -24,6 +24,7 @@ cd pbAffectation
 yarn
 ```
 You must have node js and python installed on your machine.
+(not test on windows, may have complications to start)
 
 ## Usage
 
