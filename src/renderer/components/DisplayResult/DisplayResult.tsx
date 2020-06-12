@@ -9,6 +9,7 @@ import Loading from './Loading';
 import Result from './Result';
 import GraphModal from './GraphModal';
 
+const path = require('path');
 require('./displayResult.scss');
 
 interface DisplayResultProps {
@@ -51,8 +52,9 @@ const DisplayResult: React.FC<DisplayResultProps> = ({
     const resolve = () => {
         setState({ ...state, onLoad: true });
         const data = matrixFormated();
+        const pythonPath = `${path.resolve(__dirname)}/../../../../../../src/python/main.py`;
         PythonShell.run(
-            '/home/zeke/Projets/M1/pbAffectation/pbAffectation/src/python/main.py',
+            pythonPath,
             {
                 mode: 'text',
                 args: [JSON.stringify(data), mode]
