@@ -93,7 +93,11 @@ const Application = () => {
                 mode={state.mode}
                 displayGraph={handleDisplayGraph(true)}
             />
-            <Graph visible={state.displayGraph} onCancel={handleDisplayGraph(false)} />
+            <Graph
+                visible={state.displayGraph}
+                onCancel={handleDisplayGraph(false)}
+                matrix={state.matrix}
+            />
         </div>
     );
 };
