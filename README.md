@@ -1,4 +1,4 @@
-# Optimal allocation application
+# Optimal allocation
 
 ### assignment problem solving application
 
