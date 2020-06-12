@@ -23,7 +23,7 @@ And then install the dependencies:
 cd pbAffectation
 yarn
 ```
-For those who do not have python to install, it must also be installed.
+You must have node js and python installed on your machine.
 
 ## Usage
 
