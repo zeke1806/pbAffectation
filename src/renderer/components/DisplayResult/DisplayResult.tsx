@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/ban-ts-ignore */
+/* eslint-disable spaced-comment */
 /* eslint-disable no-param-reassign */
 /* eslint-disable func-names */
 import * as React from 'react';
@@ -5,6 +7,7 @@ import { PythonShell } from 'python-shell';
 import Header from './Header';
 import Loading from './Loading';
 import Result from './Result';
+import Graph from './Graph';
 
 require('./displayResult.scss');
 
@@ -13,9 +16,18 @@ interface DisplayResultProps {
     reset: any;
     mode: string;
     displayGraph: any;
+    handleDisplayGraph: any;
+    graphVisible: boolean;
 }
 
-const DisplayResult: React.FC<DisplayResultProps> = ({ matrix, reset, mode, displayGraph }) => {
+const DisplayResult: React.FC<DisplayResultProps> = ({
+    matrix,
+    reset,
+    mode,
+    displayGraph,
+    handleDisplayGraph,
+    graphVisible
+}) => {
     const [state, setState] = React.useState({
         onLoad: false,
         result: []
@@ -71,6 +83,15 @@ const DisplayResult: React.FC<DisplayResultProps> = ({ matrix, reset, mode, disp
                     <Result result={state.result} />
                 )}
             </div>
+            {state.result.length > 0 && (
+                <Graph
+                    visible={graphVisible}
+                    onCancel={handleDisplayGraph(false)}
+                    matrix={matrix}
+                    //@ts-ignore
+                    graph={state.result[state.result.length - 1].graph}
+                />
+            )}
         </div>
     );
 };

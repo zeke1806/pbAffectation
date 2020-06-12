@@ -7,7 +7,6 @@ import Info from './AppHeader/Info';
 import MatrixInput from './MatrixInput/MatrixInput';
 import RangeEdit from './Matrix/RangeEdit';
 import DisplayResult from './DisplayResult/DisplayResult';
-import Graph from './DisplayResult/Graph';
 
 const Application = () => {
     const [state, setState] = React.useState<any>({
@@ -91,12 +90,9 @@ const Application = () => {
                 matrix={state.matrix}
                 reset={reset}
                 mode={state.mode}
+                graphVisible={state.displayGraph}
                 displayGraph={handleDisplayGraph(true)}
-            />
-            <Graph
-                visible={state.displayGraph}
-                onCancel={handleDisplayGraph(false)}
-                matrix={state.matrix}
+                handleDisplayGraph={handleDisplayGraph}
             />
         </div>
     );
