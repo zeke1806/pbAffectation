@@ -6,7 +6,6 @@
 [![Webpack](docs/img/webpack.png)](https://webpack.js.org/)
 [![TypeScript](docs/img/ts.png)](https://www.typescriptlang.org/)
 [![Electron](docs/img/electron.png)](https://electronjs.org/)
-[![Python](docs/img/python.png)](https://electronjs.org/)
 
 
 An application made with electron using an algorithm written in python to solve the optimal allocation problem
