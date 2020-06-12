@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-comment-textnodes */
 /* eslint-disable no-param-reassign */
 /* eslint-disable react/self-closing-comp */
 /* eslint-disable @typescript-eslint/ban-ts-ignore */
@@ -65,7 +66,7 @@ const GraphModal: React.FC<GraphModalProps> = ({ visible, onCancel, matrix, grap
                     <Matrix data={bindWith(matrixFormated())} />
                 </div>
                 <div style={{ flex: 1 }}>
-                    <Graph />
+                    <Graph GRAPH={graph} />
                 </div>
             </div>
         </Dialog>
