@@ -7,7 +7,7 @@ import { PythonShell } from 'python-shell';
 import Header from './Header';
 import Loading from './Loading';
 import Result from './Result';
-import Graph from './Graph';
+import GraphModal from './GraphModal';
 
 require('./displayResult.scss');
 
@@ -84,7 +84,7 @@ const DisplayResult: React.FC<DisplayResultProps> = ({
                 )}
             </div>
             {state.result.length > 0 && (
-                <Graph
+                <GraphModal
                     visible={graphVisible}
                     onCancel={handleDisplayGraph(false)}
                     matrix={matrix}
