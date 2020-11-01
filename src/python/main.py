@@ -182,3 +182,4 @@ def main (MATRIX_, type_process=None):
 if __name__ == "__main__":
     data = json.loads(argv[1])
     print(json.dumps(main(data, argv[2])))
+    # print(main(MATRIX))

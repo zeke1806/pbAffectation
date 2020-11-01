@@ -3,11 +3,13 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable func-names */
 import * as React from 'react';
-import { PythonShell } from 'python-shell';
+
+import GraphModal from './GraphModal';
 import Header from './Header';
 import Loading from './Loading';
+import { PythonShell } from 'python-shell';
 import Result from './Result';
-import GraphModal from './GraphModal';
+import { main } from '../../../algo-hongrois/main';
 
 const path = require('path');
 require('./displayResult.scss');
@@ -52,21 +54,26 @@ const DisplayResult: React.FC<DisplayResultProps> = ({
     const resolve = () => {
         setState({ ...state, onLoad: true });
         const data = matrixFormated();
-        const pythonPath = `${path.resolve(__dirname)}/../../../../../../src/python/main.py`;
-        PythonShell.run(
-            pythonPath,
-            {
-                mode: 'text',
-                args: [JSON.stringify(data), mode]
-            },
-            function(err: any, results: any) {
-                if (err) throw err;
-                const result = JSON.parse(results[0]);
-                setTimeout(function() {
-                    setState({ ...state, onLoad: false, result });
-                }, 1500);
-            }
-        );
+        // const pythonPath = `${path.resolve(__dirname)}/../../../../../../src/python/main.py`;
+        // PythonShell.run(
+        //     pythonPath,
+        //     {
+        //         mode: 'text',
+        //         args: [JSON.stringify(data), mode]
+        //     },
+        //     function(err: any, results: any) {
+        //         if (err) throw err;
+        //         const result = JSON.parse(results[0]);
+        //         setTimeout(function() {
+        //             setState({ ...state, onLoad: false, result });
+        //         }, 1500);
+        //     }
+        // );
+
+        const result = main(data, mode);
+        setTimeout(function() {
+            setState({ ...state, onLoad: false, result });
+        }, 1500);
     };
 
     return (

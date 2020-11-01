@@ -1,6 +1,6 @@
-type MatrixCell = number | 'E' | 'B';
-type MatrixShape = MatrixCell[][];
-type Marquage = {
+export type MatrixCell = number | 'E' | 'B';
+export type MatrixShape = MatrixCell[][];
+export type Marquage = {
     ligne: number[];
     colonne: number[];
 };
@@ -31,7 +31,7 @@ function print2dMatrix(matrix: MatrixShape) {
     }
 }
 
-function formatMatrix(matrix: MatrixShape) {
+export function formatMatrix(matrix: MatrixShape) {
     matrix.forEach((yElt, y) => {
         yElt.forEach((xElt, x) => {
             if (xElt === 'E' || xElt === 'B') matrix[y][x] = 0;
@@ -40,7 +40,7 @@ function formatMatrix(matrix: MatrixShape) {
     return matrix;
 }
 
-function optimalCoupling(matrix: MatrixShape) {
+export function optimalCoupling(matrix: MatrixShape) {
     let couplage = true;
     matrix.forEach(yElt => {
         if (yElt.filter(elt => elt === 'E').length !== 1) couplage = false;
@@ -307,7 +307,7 @@ function updateCoutMinimal(coutActuel: number, nbMarquage: number, nbMin: number
 
 // ETAPE DE L'ALGORITHME //
 
-function stepOne(matrix: MatrixShape, lastMinCost = 0) {
+export function stepOne(matrix: MatrixShape, lastMinCost = 0) {
     const minCol = (recupMinCol(matrix) as unknown) as MatrixCell[];
     matrix = removeMinCol(matrix, minCol);
     const minLine = recupMinLine(matrix);
@@ -322,7 +322,7 @@ function stepOne(matrix: MatrixShape, lastMinCost = 0) {
     };
 }
 
-function stepTwo(stepOneResponse: {
+export function stepTwo(stepOneResponse: {
     matrix: MatrixShape;
     coutMinimal: number;
     minCol: MatrixCell[];
@@ -340,7 +340,7 @@ function stepTwo(stepOneResponse: {
     };
 }
 
-function stepThree(stepTwoResponse: { matrix: MatrixCell[][]; coutMinimal: number }) {
+export function stepThree(stepTwoResponse: { matrix: MatrixCell[][]; coutMinimal: number }) {
     const matrix = stepTwoResponse.matrix;
     const coutMinimal = stepTwoResponse.coutMinimal;
     const marquage = obtentionMarquage(matrix);
@@ -354,7 +354,7 @@ function stepThree(stepTwoResponse: { matrix: MatrixCell[][]; coutMinimal: numbe
     };
 }
 
-function stepFour(stepThreeResponse: {
+export function stepFour(stepThreeResponse: {
     matrix: MatrixCell[][];
     coutMinimal: number;
     supportMinimal: Marquage;
