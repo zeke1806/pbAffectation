@@ -22,11 +22,6 @@
         "dist:linux": "electron-builder --linux",
         "dist:windows": "electron-builder --windows"
     },
-    "husky": {
-        "hooks": {
-            "pre-commit": "lint-staged"
-        }
-    },
     "lint-staged": {
         "{src,test,mocks}/**/*.{json,css,scss,md}": [
             "prettier --config ./.prettierrc --write"
