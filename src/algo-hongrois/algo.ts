@@ -45,7 +45,7 @@ function optimalCoupling(matrix: MatrixShape) {
     matrix.forEach(yElt => {
         if (yElt.filter(elt => elt === 'E').length !== 1) couplage = false;
     });
-    return true;
+    return couplage;
 }
 
 // (END) FONCTION UTILE POUR LE DEVELOPPEMENT
@@ -129,7 +129,7 @@ function choiceLine(matrix: MatrixShape) {
     const listeNbZero: number[] = [];
     const listeSansZero: number[] = [];
     matrix.forEach(line => {
-        listeNbZero.push(line.length);
+        listeNbZero.push(line.filter(l => l === 0).length);
     });
     listeNbZero.forEach(elt => {
         if (elt !== 0) {
@@ -148,8 +148,7 @@ function zeroFraming(matrix: MatrixShape, line: number) {
             trouver = true;
             col = x;
             matrix[line][x] = 'E';
-        }
-        if (trouver && xElt === 0) {
+        } else if (trouver && xElt === 0) {
             matrix[line][x] = 'B';
         }
     });
@@ -240,9 +239,9 @@ function obtentionSm(matrix: MatrixShape, marquage: Marquage) {
         colonne: []
     };
     supportMinimal.colonne = marquage.colonne;
-    matrix.forEach(i => {
-        if (!marquage.ligne.includes(i[0] as number)) {
-            supportMinimal.ligne.push(i[0] as number);
+    matrix.forEach((_, i) => {
+        if (!marquage.ligne.includes(i)) {
+            supportMinimal.ligne.push(i);
         }
     });
     return supportMinimal;
@@ -307,3 +306,91 @@ function updateCoutMinimal(coutActuel: number, nbMarquage: number, nbMin: number
 // (END) FONCTION DEDIEE A LA QUATRIEME ETAPE //
 
 // ETAPE DE L'ALGORITHME //
+
+function stepOne(matrix: MatrixShape, lastMinCost = 0) {
+    const minCol = (recupMinCol(matrix) as unknown) as MatrixCell[];
+    matrix = removeMinCol(matrix, minCol);
+    const minLine = recupMinLine(matrix);
+    matrix = removeMinLine(matrix, minLine);
+    const coutMin = lastMinCost + minCout(minCol, minLine);
+
+    return {
+        matrix,
+        coutMinimal: coutMin,
+        minCol: minCol,
+        minLine: minLine
+    };
+}
+
+function stepTwo(stepOneResponse: {
+    matrix: MatrixShape;
+    coutMinimal: number;
+    minCol: MatrixCell[];
+    minLine: MatrixCell[];
+}) {
+    let matrix = [...stepOneResponse.matrix];
+    const coutMinimal = stepOneResponse.coutMinimal;
+    while (remainingZero(matrix)) {
+        const line = choiceLine(matrix);
+        matrix = zeroFraming(matrix, line);
+    }
+    return {
+        matrix,
+        coutMinimal
+    };
+}
+
+function stepThree(stepTwoResponse: { matrix: MatrixCell[][]; coutMinimal: number }) {
+    const matrix = stepTwoResponse.matrix;
+    const coutMinimal = stepTwoResponse.coutMinimal;
+    const marquage = obtentionMarquage(matrix);
+    const nbMarquage = countMarquage(marquage);
+    const supportMinimal = obtentionSm(matrix, marquage);
+    return {
+        matrix,
+        coutMinimal,
+        supportMinimal,
+        nbMarquage
+    };
+}
+
+function stepFour(stepThreeResponse: {
+    matrix: MatrixCell[][];
+    coutMinimal: number;
+    supportMinimal: Marquage;
+    nbMarquage: number;
+}) {
+    let matrix = stepThreeResponse.matrix;
+    const oldCoutMinimal = stepThreeResponse.coutMinimal;
+    const supportMinimal = stepThreeResponse.supportMinimal;
+    const nbMarquage = stepThreeResponse.nbMarquage;
+    matrix = formatMatrix(matrix);
+    const minNb = getMin(matrix, supportMinimal);
+    matrix = deplaceZero(matrix, supportMinimal, minNb);
+    const coutMinimal = updateCoutMinimal(oldCoutMinimal, nbMarquage, minNb);
+
+    return {
+        matrix,
+        oldCoutMinimal,
+        coutMinimal,
+        minNb,
+        supportMinimal,
+        nbMarquage
+    };
+}
+
+function main() {
+    let stepOneResponse = stepOne(MATRIX2);
+    let stepTwoResponse = stepTwo(stepOneResponse);
+
+    while (!optimalCoupling(stepTwoResponse.matrix)) {
+        let stepThreeResponse = stepThree(stepTwoResponse);
+        let stepFourResponse = stepFour(stepThreeResponse);
+        stepOneResponse = stepOne(stepFourResponse.matrix, stepFourResponse.coutMinimal);
+        stepTwoResponse = stepTwo(stepOneResponse);
+    }
+    print2dMatrix(stepTwoResponse.matrix);
+    console.log(stepTwoResponse.coutMinimal);
+}
+
+main();

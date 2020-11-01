@@ -320,7 +320,7 @@ def step_four (step_three_response):
 
 # zone de test
 if __name__ == "__main__":
-    step_one_response = step_one(MATRIX)
+    step_one_response = step_one(MATRIX2)
     step_two_response = step_two(step_one_response)
     while not optimal_coupling(step_two_response['matrix']):
         step_three_response = step_three(step_two_response)
